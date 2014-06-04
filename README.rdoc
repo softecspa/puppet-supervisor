@@ -1,7 +1,7 @@
-## puppet-supervisor
+##puppet-supervisor
 Puppet module for configuring the 'supervisor' daemon control utility. Currently tested on Debian, Ubuntu, and Fedora.
 
-## Example usage
+##Example usage
 
     include supervisor
 
