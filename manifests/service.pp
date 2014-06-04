@@ -1,3 +1,55 @@
+# ==Define supervisor::service
+# Create a new supervisor instance
+#
+# ==Params
+#
+# [*command*]
+#   Command to execute. Mandatory
+# [*ensure*]
+#   Ensure instance. Default: present
+# [*enable*]
+#   If true, enable supervisor at default level. Default: true
+# [*numprocs*]
+#   Num procs used. Default: 1
+# [*priority*]
+#   Priority supervisor param. Default: 999
+# [*autorestart*]
+#   autorestart supervisor param. Default: exexpected
+# [*startsecs*]
+#   startsecs supervisor param. Default: 1
+# [*retries*]
+#   retries supervisor param. Default: 3
+# [*exitcodes*]
+#   exitcodes supervisor param. Default 0,2
+# [*stopsignal*]
+#   stopsignal supervisor param. Default TERM
+# [*stopwait*]
+#   stopwait supervisor param. Default: 10
+# [*user*]
+#   user who start instance. Default: empty
+# [*group*]
+#   group to start instance. Default: empty
+# [*redirect_stderr*]
+#   redirect_stderr supervisor param. Default: false
+# [*stdout_logfile*]
+#   stdout_logfile supervisor param. Default: empty
+# [*stdout_logfile_maxsize*]
+#   stdout_logfile_maxsize supervisor param. Default: 250MB
+# [*stdout_logfile_keep*]
+#   stdout_logfile_keep supervisor param. Default: 10
+# [*stderr_logfile*]
+#   stderr_logfile supervisor param. Default: empty
+# [*stderr_logfile_maxsize*]
+#   stderr_logfile_maxsize supervisor param. Default: 250MB
+# [*stderr_logfile_keep*]
+#   stderr_logfile_keep supervisor param. Default: 10
+# [*environment*]
+#   environment supervisor param. Default: empty
+# [*chdir*]
+#   chdir supervisor param. Default: empty
+# [*umask*]
+#   umask supervisor param. Default: empty
+#
 define supervisor::service(
   $command,
   $ensure=present,
