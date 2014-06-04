@@ -1,9 +1,9 @@
 puppet-supervisor
 =================
-Install supervisor and manage instances
+== Install supervisor and manage instances
 
 
-Puppet module for configuring the 'supervisor' daemon control
+== Puppet module for configuring the 'supervisor' daemon control
 utility. Currently tested on Debian, Ubuntu, and Fedora.
 
 Install into `module_path>/supervisor`
