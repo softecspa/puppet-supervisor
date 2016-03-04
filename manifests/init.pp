@@ -71,7 +71,7 @@ class supervisor (
   }
 
   # ensure merging of hiera levels
-  $hiera_services = hiera_hash('supervisor::services:', {})
+  $hiera_services = hiera_hash('supervisor::services', {})
   $real_services = $hiera_services ? {
     undef   => $services,
     default => $hiera_services,
