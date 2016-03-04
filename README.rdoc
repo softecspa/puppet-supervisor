@@ -1,5 +1,7 @@
 = puppet-supervisor
-Puppet module for configuring the 'supervisor' daemon control utility. Currently tested on Debian, Ubuntu, and Fedora.
+
+Puppet module for configuring the 'supervisor' daemon control utility. Currently
+tested on Debian, Ubuntu, and Fedora.
 
 = Example usage
 
@@ -13,3 +15,23 @@ Puppet module for configuring the 'supervisor' daemon control utility. Currently
       group         => scribe,
       require       => [ Package['scribe'], User['scribe'] ];
     }
+
+= Example usage with services defined in hiera
+
+Simply include the main class in your `pp` file
+
+    include supervisor
+
+Add to your hiera config:
+
+    supervisor::services:
+      scribe:
+        ensure:       running
+        enable:       true
+        command:      '/usr/bin/scribed -c /etc/scribe/scribe.conf'
+        environment:  'HADOOP_HOME=/usr/lib/hadoop,LD_LIBRARY_PATH=/usr/lib/jvm/java-6-sun/jre/lib/amd64/server'
+        user:         scribe
+        group:        scribe
+        require:
+          - User['scribe']
+          - Package['scribe']

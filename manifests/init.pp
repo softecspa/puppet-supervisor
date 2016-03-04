@@ -1,11 +1,13 @@
 # Install supervisor daemon
-class supervisor(
+class supervisor (
   $ensure = present,
+  $services = {},
 ) {
 
   include supervisor::params
 
   validate_re($ensure, [ '^installed$', '^present$', '^absent$', '^latest$' ])
+  validate_hash($services)
 
   ensure_resource(
     'package',
@@ -44,8 +46,8 @@ class supervisor(
     archive      => true,
     olddir       => '/var/log/supervisor/archives/supervisor',
     olddir_owner => 'root',
-    olddir_group => 'root',
-    olddir_mode  => '664',
+    olddir_group => 'adm',
+    olddir_mode  => '644',
     create       => '664 root root',
     postrotate   => '/usr/bin/killall -USR2 supervisord',
     require      => File['/var/log/supervisor/archives'],
@@ -60,10 +62,23 @@ class supervisor(
     require    => Package[$supervisor::params::package];
   }
 
+  # hook to let supervisor::service reload supervisor config
   exec { 'supervisor::update':
       command     => '/usr/bin/supervisorctl update',
       logoutput   => on_failure,
       refreshonly => true,
       require     => Service[$supervisor::params::system_service];
   }
+
+  # ensure merging of hiera levels
+  $hiera_services = hiera_hash('supervisor::services:', {})
+  $real_services = $hiera_services ? {
+    undef   => $services,
+    default => $hiera_services,
+  }
+
+  if $real_services {
+    create_resources('supervisor::service', $real_services)
+  }
+
 }
