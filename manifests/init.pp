@@ -1,11 +1,17 @@
-class supervisor {
+# Install supervisor daemon
+class supervisor(
+  $ensure = present,
+) {
+
   include supervisor::params
 
-  if ! defined(Package[$supervisor::params::package]) {
-    package {$supervisor::params::package:
-      ensure => installed
-    }
-  }
+  validate_re($ensure, [ '^installed$', '^present$', '^absent$', '^latest$' ])
+
+  ensure_resource(
+    'package',
+    $supervisor::params::package,
+    { ensure => $ensure }
+  )
 
   file {
     $supervisor::params::conf_dir:
